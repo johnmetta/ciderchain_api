@@ -1,0 +1,114 @@
+Creating scope :open. Overwriting existing method Racking.open.
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "additions"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "additions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" float, "racking_id" integer, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "notes" text, "additive_id" integer, "source_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "additive_sources"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "additive_sources" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "source_id" integer, "additive_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "additives"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "additives" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "notes" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "batch_sources"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "batch_sources" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "batch_id" integer, "source_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "batches"[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "batches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "code" varchar, "volume" integer, "name" varchar, "notes" varchar, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "measurements"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "measurements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float, "racking_id" integer, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "property_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "properties"[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "properties" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "rackings"[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "rackings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "volume" integer, "batch_id" integer, "unit_id" integer, "vessel_id" integer, "state_id" integer, "closed" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "closed_by_id" integer, "packaged" boolean DEFAULT 0)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "sources"[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "sources" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "notes" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "states"[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "states" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "units"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "units" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "dimensions" integer, "factor" float, "base_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "short_name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "crypted_password" varchar, "salt" varchar, "created_at" datetime, "updated_at" datetime, "remember_me_token" varchar, "remember_me_token_expires_at" datetime, "reset_password_token" varchar, "reset_password_token_expires_at" datetime, "reset_password_email_sent_at" datetime)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_users_on_remember_me_token" ON "users" ("remember_me_token")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "vessel_types"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "vessel_types" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "abbreviation" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "vessels"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "vessels" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "vessel_type_id" integer, "code" varchar, "volume" integer, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20160314051405)[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20160309035609),
+(20160309003312),
+(20160309035514),
+(20160309041947),
+(20160213182023);
+
+[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-07-30 07:38:09.067112"], ["updated_at", "2018-07-30 07:38:09.067112"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Creating scope :open. Overwriting existing method Racking.open.
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Creating scope :open. Overwriting existing method Racking.open.
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Creating scope :open. Overwriting existing method Racking.open.
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "additions"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "additions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "amount" float, "racking_id" integer, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "notes" text, "additive_id" integer, "source_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "additive_sources"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "additive_sources" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "source_id" integer, "additive_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "additives"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "additives" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "notes" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "batch_sources"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "batch_sources" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "batch_id" integer, "source_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "batches"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "batches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "code" varchar, "volume" integer, "name" varchar, "notes" varchar, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "measurements"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "measurements" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "value" float, "racking_id" integer, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "property_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "properties"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "properties" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "rackings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "rackings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "volume" integer, "batch_id" integer, "unit_id" integer, "vessel_id" integer, "state_id" integer, "closed" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "closed_by_id" integer, "packaged" boolean DEFAULT 0)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "sources"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "sources" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "notes" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "states"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "states" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "units"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "units" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "dimensions" integer, "factor" float, "base_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "short_name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar NOT NULL, "crypted_password" varchar, "salt" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "remember_me_token" varchar, "remember_me_token_expires_at" datetime, "reset_password_token" varchar, "reset_password_token_expires_at" datetime, "reset_password_email_sent_at" datetime, "access_count_to_reset_password_page" integer DEFAULT 0)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX "index_users_on_remember_me_token" ON "users" ("remember_me_token")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "vessel_types"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "vessel_types" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "abbreviation" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "vessels"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "vessels" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "vessel_type_id" integer, "code" varchar, "volume" integer, "unit_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20180730074802)[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20160309035609),
+(20160309003312),
+(20160314051405),
+(20160309035514),
+(20160309041947),
+(20160213182023),
+(20180730074800),
+(20180730074801);
+
+[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-07-30 07:49:11.530225"], ["updated_at", "2018-07-30 07:49:11.530225"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Creating scope :open. Overwriting existing method Racking.open.
