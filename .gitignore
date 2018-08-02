@@ -5,6 +5,7 @@ script/coverage
 vendor/plugins/attachment_fu/.gitignore
 log/*
 tmp/*
+api/tmp/
 tmp/**/*
 *.pub
 *.pem
