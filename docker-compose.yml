@@ -13,9 +13,10 @@ services:
     build: .
     command: rails s
     volumes:
-      - ./api:/server
+      - .:/server
     ports:
-      - "3000:3000"
+      - "8080:8080"
+    entrypoint: [bin/entry]
     depends_on:
       db:
         condition: service_healthy
