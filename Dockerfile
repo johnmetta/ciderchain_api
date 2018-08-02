@@ -7,5 +7,5 @@ COPY Gemfile /server/Gemfile
 COPY Gemfile.lock /server/Gemfile.lock
 RUN bundle install
 COPY . /server
-EXPOSE 3000
-#CMD ["rails", "s", "-b", "0.0.0.0"]
+EXPOSE 8080
+CMD ["rails", "s", "-p", "8080", "-b", "0.0.0.0"]

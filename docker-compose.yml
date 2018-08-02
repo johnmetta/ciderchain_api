@@ -9,9 +9,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  api:
+  server:
     build: .
-    command: rails s
+    command: rails s -p 8080 -b '0.0.0.0'
+    tty: true
+    stdin_open: true
     volumes:
       - .:/server
     ports:

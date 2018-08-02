@@ -1,8 +1,12 @@
-#!/bin/bash
-set -e
+#! /bin/bash
+rails db:migrate
 
-rake db:create
-rake db:migrate
-rake db:seed
+if [[ $? != 0 ]]; then
+  echo
+  echo "== Failed to migrate. Running setup first."
+  echo
+  rails db:setup
+fi
 
+# Execute the given or default command:
 exec "$@"
